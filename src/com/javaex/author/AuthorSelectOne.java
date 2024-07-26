@@ -9,7 +9,8 @@ import java.sql.SQLException;
 public class AuthorSelectOne {
 
 	public static void main(String[] args) {
-
+		AuthorVo authorVo = null;
+		
 		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -45,10 +46,7 @@ public class AuthorSelectOne {
 			String name = rs.getString("author_name");
 			String desc = rs.getString("author_desc");
 			
-			AuthorVo authorVo = new AuthorVo(id, name, desc);
-			System.out.println(authorVo);
-			System.out.println(authorVo.getName());
-			
+			authorVo = new AuthorVo(id, name, desc);
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("error: 드라이버 로딩 실패 - " + e);
@@ -73,6 +71,9 @@ public class AuthorSelectOne {
 
 		}
 
+		System.out.println(authorVo);
+		System.out.println(authorVo.getName());	
+		
 	}
 
 }

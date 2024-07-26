@@ -5,11 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthorSelect {
 
 	public static void main(String[] args) {
 
+		List<AuthorVo> authorList = new ArrayList<AuthorVo>();
+		
 		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -32,13 +36,20 @@ public class AuthorSelect {
 			query += " from author ";
 			
 			//*바인딩
-			
-			
+			pstmt = conn.prepareStatement(query);
 			
 			//*실행
-			
+			rs =  pstmt.executeQuery();
 			
 			// 4.결과처리
+			while(rs.next()) {
+				int id = rs.getInt("author_id");
+				String name = rs.getString("author_name");
+				String desc = rs.getString("author_desc");
+							
+				AuthorVo authorVo = new AuthorVo(id, name, desc);
+				authorList.add(authorVo);				
+			}
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("error: 드라이버 로딩 실패 - " + e);
@@ -62,7 +73,27 @@ public class AuthorSelect {
 			}
 
 		}
+		
+		//어디서나 데이터를 찾아서 쓸수 있다
+		//System.out.println(authorList.get(2).getName());
+		
+		//전체출력
+		for(int i=0; i<authorList.size(); i++) {
+			
+			AuthorVo aVo = authorList.get(i);
 
+			System.out.print(aVo.getId() + ".  ");
+			System.out.print(aVo.getName()+ "\t");
+			System.out.println(aVo.getDesc());
+		}
+		
+		System.out.println("---------------------------------");
+		
+		for(AuthorVo vo : authorList) {
+			System.out.print(vo.getId() + ".  ");
+			System.out.print(vo.getName()+ "\t");
+			System.out.println(vo.getDesc());
+		}
 	}
 
 }
