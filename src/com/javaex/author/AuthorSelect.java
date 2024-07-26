@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AuthorUpdate {
+public class AuthorSelect {
 
 	public static void main(String[] args) {
 
@@ -22,26 +22,23 @@ public class AuthorUpdate {
 			// 2. Connection 얻어오기
 			String url = "jdbc:mysql://localhost:3306/book_db";
 			conn = DriverManager.getConnection(url, "book", "book");
-
+			
 			// 3. SQL문 준비 / 바인딩 / 실행
-			// *sql문 준비
+			//*sql문 준비
 			String query = "";
-			query += " update author ";
-			query += " set author_name = ?, ";
-			query += "     author_desc = ? ";
-			query += " where author_id = ? ";
-
-			// *바인딩
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "박경리");
-			pstmt.setString(2, "토지 작가");
-			pstmt.setInt(3, 2);
-
-			// *실행
-			int count = pstmt.executeUpdate();
-
+			query += " select 	author_id, ";
+			query += "		    author_name, ";
+			query += "          author_desc ";
+			query += " from author ";
+			
+			//*바인딩
+			
+			
+			
+			//*실행
+			
+			
 			// 4.결과처리
-			System.out.println(count + "건이 수정되었습니다.");
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("error: 드라이버 로딩 실패 - " + e);
